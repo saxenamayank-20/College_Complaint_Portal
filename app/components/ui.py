@@ -1,4 +1,3 @@
-"""app/components/ui.py — Global CSS, badges, cards, timeline, progress tracker."""
 import streamlit as st
 
 
