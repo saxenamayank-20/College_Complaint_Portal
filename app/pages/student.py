@@ -1,4 +1,3 @@
-"""app/pages/student.py — Student dashboard: New Complaint, My Tickets, Track Status."""
 import streamlit as st
 from database.models import (submit_complaint, get_student_complaints,
                               get_complaint_timeline, auto_detect_priority)

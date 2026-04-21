@@ -1,4 +1,3 @@
-"""database/connection.py — MySQL connection pool with dict-row wrapper."""
 from mysql.connector import pooling
 from config.settings import DB_CONFIG
 

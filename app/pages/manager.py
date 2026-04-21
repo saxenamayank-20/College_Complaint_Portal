@@ -1,4 +1,3 @@
-"""app/pages/manager.py — Grievance Manager dashboard."""
 import streamlit as st
 from database.models import (get_manager_complaints, update_complaint_status,
                               get_complaint_timeline, request_close, add_manager_update)

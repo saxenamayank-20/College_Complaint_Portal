@@ -1,4 +1,3 @@
-"""app/pages/auth.py — Login & Registration pages."""
 import re, time
 import streamlit as st
 from database.models import login_user, register_student

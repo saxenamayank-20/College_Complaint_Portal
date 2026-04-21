@@ -1,4 +1,3 @@
-"""database/models.py — All database operations (CRUD)."""
 import bcrypt, random, string
 from datetime import datetime
 from database.connection import get_connection

@@ -1,4 +1,3 @@
-"""app/pages/admin.py — Admin dashboard: 3 tabs."""
 import streamlit as st
 import pandas as pd
 from database.models import (get_all_complaints_by_category, get_resolved_complaints,
