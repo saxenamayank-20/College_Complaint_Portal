@@ -3,17 +3,39 @@ from dotenv import load_dotenv
 
 _ = load_dotenv()
 
-ADMIN_SEED_PASSWORD = os.getenv("ADMIN_SEED_PASSWORD", "change-me-admin")
-MANAGER_SEED_PASSWORD = os.getenv("MANAGER_SEED_PASSWORD", "change-me-manager")
+try:
+    import streamlit as st
+except Exception:
+    st = None
+
+
+def _read_setting(name, default=None):
+    value = os.getenv(name)
+    if value not in (None, ""):
+        return value
+
+    if st is not None:
+        try:
+            secret_value = st.secrets.get(name)
+            if secret_value not in (None, ""):
+                return secret_value
+        except Exception:
+            pass
+
+    return default
+
+ADMIN_SEED_PASSWORD = _read_setting("ADMIN_SEED_PASSWORD", "change-me-admin")
+MANAGER_SEED_PASSWORD = _read_setting("MANAGER_SEED_PASSWORD", "change-me-manager")
 
 # ─── MYSQL ────────────────────────────────────────────────────────────────────
 DB_CONFIG = {
-    "host":     os.getenv("MYSQL_HOST",     "localhost"),
-    "port":     int(os.getenv("MYSQL_PORT", "3306")),
-    "user":     os.getenv("MYSQL_USER",     "root"),
-    # Support either MYSQL_PASSWORD or DB_PASSWORD from local .env files.
-    "password": os.getenv("MYSQL_PASSWORD") or os.getenv("DB_PASSWORD", ""),
-    "database": os.getenv("MYSQL_DB",       "complaint_portal"),
+    "host":     _read_setting("MYSQL_HOST", "localhost"),
+    "port":     int(_read_setting("MYSQL_PORT", "3306")),
+    "user":     _read_setting("MYSQL_USER", "root"),
+    # Support either MYSQL_PASSWORD or DB_PASSWORD from local .env files / Streamlit secrets.
+    "password": _read_setting("MYSQL_PASSWORD") or _read_setting("DB_PASSWORD", ""),
+    "database": _read_setting("MYSQL_DB", "complaint_portal"),
+    "connection_timeout": int(_read_setting("MYSQL_CONNECTION_TIMEOUT", "10")),
 }
 
 # ─── PREDEFINED USERS (Admin + 4 Grievance Managers) ─────────────────────────
