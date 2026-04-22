@@ -69,6 +69,30 @@ def _seed_users(conn):
     conn.commit()
 
 
+def update_predefined_user_passwords():
+    """
+    Update passwords for existing predefined users with current values from settings.
+    This is useful when passwords are changed in .env file after database initialization.
+    """
+    conn = get_connection(); c = conn.cursor()
+    try:
+        for u in PREDEFINED_USERS:
+            user_id, name, email, password, role, department, category = u
+            # Update password for existing user
+            c.execute("UPDATE users SET password=%s WHERE user_id=%s AND role != 'student'",
+                      (_hash(password), user_id))
+        conn.commit()
+        print("[UPDATE] Predefined user passwords updated successfully!")
+        return True, "Predefined user passwords updated successfully!"
+    except Exception as e:
+        conn.rollback()
+        error_msg = f"Failed to update passwords: {str(e)}"
+        print(f"[UPDATE ERROR] {error_msg}")
+        return False, error_msg
+    finally:
+        conn.close()
+
+
 # ─── AUTH ────────────────────────────────────────────────────────────────────
 def register_student(user_id, name, email, password, department):
     conn = get_connection(); c = conn.cursor()
