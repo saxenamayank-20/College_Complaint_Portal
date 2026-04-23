@@ -13,12 +13,14 @@ from app.pages.student import render_student_dashboard
 from config.settings import APP_TITLE
 from database.models import init_db
 
-_ = st.set_page_config(
-    page_title=APP_TITLE,
-    page_icon="🎓",
-    layout="wide",
-    initial_sidebar_state="expanded",
-)
+if "page_config_done" not in st.session_state:
+    st.set_page_config(
+        page_title=APP_TITLE,
+        page_icon="🎓",
+        layout="wide",
+        initial_sidebar_state="expanded",
+    )
+    st.session_state["page_config_done"] = True
 
 try:
     _ = init_db()
