@@ -25,6 +25,8 @@ def _read_setting(name, default=None):
 
     return default
 
+    
+
 ADMIN_SEED_PASSWORD = _read_setting("ADMIN_SEED_PASSWORD", "change-me-admin")
 GM001_PASSWORD = _read_setting("GM001_PASSWORD", "change-me-gm001")
 GM002_PASSWORD = _read_setting("GM002_PASSWORD", "change-me-gm002")
