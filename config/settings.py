@@ -133,7 +133,7 @@ def generate_student_id():
         # Find the highest existing student ID using numeric ordering
         c.execute("""
             SELECT user_id FROM users
-            WHERE role='student' AND user_id LIKE %s
+            WHERE role='student' AND user_id LIKE ?
             ORDER BY CAST(SUBSTRING(user_id, 3) AS UNSIGNED) DESC
             LIMIT 1
         """, (f"{STUDENT_ID_PREFIX}%",))
@@ -154,7 +154,7 @@ def generate_student_id():
         new_id = f"{STUDENT_ID_PREFIX}{next_num:06d}"
 
         # Double-check that this ID doesn't already exist (safety check)
-        c.execute("SELECT 1 FROM users WHERE user_id=%s", (new_id,))
+        c.execute("SELECT 1 FROM users WHERE user_id=?", (new_id,))
         if c.fetchone():
             # If it exists, increment and try again (shouldn't happen with proper ordering)
             next_num += 1
