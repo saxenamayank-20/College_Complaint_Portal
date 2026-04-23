@@ -10,43 +10,42 @@ def init_db():
     conn = get_connection(); c = conn.cursor()
 
     c.execute("""CREATE TABLE IF NOT EXISTS users (
-        id INT AUTO_INCREMENT PRIMARY KEY,
-        user_id VARCHAR(50) UNIQUE NOT NULL,
-        name VARCHAR(100) NOT NULL,
-        email VARCHAR(150) UNIQUE NOT NULL,
-        password VARCHAR(255) NOT NULL,
-        role ENUM('student','grievance_manager','admin') NOT NULL,
-        department VARCHAR(100), category VARCHAR(100),
+        id INTEGER PRIMARY KEY,
+        user_id TEXT UNIQUE NOT NULL,
+        name TEXT NOT NULL,
+        email TEXT UNIQUE NOT NULL,
+        password TEXT NOT NULL,
+        role TEXT NOT NULL,
+        department TEXT,
+        category TEXT,
         created_at DATETIME DEFAULT CURRENT_TIMESTAMP)""")
 
     c.execute("""CREATE TABLE IF NOT EXISTS complaints (
-        id INT AUTO_INCREMENT PRIMARY KEY,
-        ticket_id VARCHAR(20) UNIQUE NOT NULL,
-        student_id VARCHAR(50) NOT NULL,
-        student_name VARCHAR(100), student_email VARCHAR(150), student_dept VARCHAR(100),
-        title VARCHAR(200) NOT NULL, description TEXT NOT NULL,
-        category VARCHAR(100) NOT NULL,
-        priority ENUM('Low','Medium','High','Critical') NOT NULL,
-        status ENUM('Pending','Assigned','In Progress','Resolved','Closed') NOT NULL DEFAULT 'Pending',
-        assigned_to VARCHAR(50), manager_name VARCHAR(100), manager_email VARCHAR(150),
+        id INTEGER PRIMARY KEY,
+        ticket_id TEXT UNIQUE NOT NULL,
+        student_id TEXT NOT NULL,
+        student_name TEXT, student_email TEXT, student_dept TEXT,
+        title TEXT NOT NULL, description TEXT NOT NULL,
+        category TEXT NOT NULL,
+        priority TEXT NOT NULL,
+        status TEXT NOT NULL DEFAULT 'Pending',
+        assigned_to TEXT, manager_name TEXT, manager_email TEXT,
         student_remarks TEXT, manager_remarks TEXT,
-        meet_link VARCHAR(300), close_requested TINYINT(1) DEFAULT 0,
+        meet_link TEXT, close_requested INTEGER DEFAULT 0,
         created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
-        updated_at DATETIME DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
-        resolved_at DATETIME,
-        FOREIGN KEY (student_id) REFERENCES users(user_id))""")
+        updated_at DATETIME DEFAULT CURRENT_TIMESTAMP,
+        resolved_at DATETIME)""")
 
     c.execute("""CREATE TABLE IF NOT EXISTS complaint_history (
-        id INT AUTO_INCREMENT PRIMARY KEY,
-        ticket_id VARCHAR(20) NOT NULL, changed_by VARCHAR(50) NOT NULL,
-        action VARCHAR(150) NOT NULL, old_status VARCHAR(50), new_status VARCHAR(50),
-        note TEXT, timestamp DATETIME DEFAULT CURRENT_TIMESTAMP,
-        FOREIGN KEY (ticket_id) REFERENCES complaints(ticket_id))""")
+        id INTEGER PRIMARY KEY,
+        ticket_id TEXT NOT NULL, changed_by TEXT NOT NULL,
+        action TEXT NOT NULL, old_status TEXT, new_status TEXT,
+        note TEXT, timestamp DATETIME DEFAULT CURRENT_TIMESTAMP)""")
 
     c.execute("""CREATE TABLE IF NOT EXISTS manager_updates (
-        id INT AUTO_INCREMENT PRIMARY KEY,
-        ticket_id VARCHAR(20) NOT NULL, manager_id VARCHAR(50) NOT NULL,
-        manager_name VARCHAR(100), update_text TEXT NOT NULL,
+        id INTEGER PRIMARY KEY,
+        ticket_id TEXT NOT NULL, manager_id TEXT NOT NULL,
+        manager_name TEXT, update_text TEXT NOT NULL,
         created_at DATETIME DEFAULT CURRENT_TIMESTAMP)""")
 
     conn.commit(); _seed_users(conn); conn.close()

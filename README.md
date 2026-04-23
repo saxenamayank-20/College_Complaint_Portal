@@ -1,6 +1,6 @@
 # College Complaint Portal
 
-A role-based complaint management system built with Streamlit, MySQL, and an optional FastAPI backend.
+A role-based complaint management system built with Streamlit and SQLite.
 
 This project is designed for a college environment where:
 
@@ -27,9 +27,8 @@ The portal supports the full complaint flow from submission to closure.
 
 - Python
 - Streamlit
-- MySQL
-- FastAPI
-- `mysql-connector-python`
+- SQLite
+- FastAPI (optional)
 - `bcrypt`
 - `pandas`
 - `python-dotenv`
@@ -140,34 +139,15 @@ python -m venv .venv
 pip install -r requirements.txt
 ```
 
-### 4. Create the MySQL database
+### 4. Run the App
 
-Run this in MySQL:
+The SQLite database file (`complaint_portal.db`) will be created automatically on first run.
 
-```sql
-CREATE DATABASE complaint_portal CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
+```bash
+streamlit run main.py
 ```
 
-### 5. Create your `.env` file
-
-Add a `.env` file in the project root with values like these:
-
-```env
-MYSQL_HOST=localhost
-MYSQL_PORT=3306
-MYSQL_USER=root
-MYSQL_PASSWORD=your_mysql_password
-MYSQL_DB=complaint_portal
-
-ADMIN_SEED_PASSWORD=change-me-admin
-MANAGER_SEED_PASSWORD=change-me-manager
-```
-
-Note:
-
-- `.env` is for your local machine only
-- do not commit real passwords to GitHub
-- the app reads these values through `config/settings.py`
+No additional database configuration needed!
 
 ## Running The Project
 

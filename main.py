@@ -87,9 +87,8 @@ def main():
         st.error("Database connection failed during startup.")
         st.code(DB_ERROR)
         st.info(
-            "For Streamlit Cloud, add MYSQL_HOST, MYSQL_PORT, MYSQL_USER, "
-            "MYSQL_PASSWORD, and MYSQL_DB in App Settings > Secrets, and use "
-            "a MySQL server that allows remote connections."
+            "SQLite database file will be created automatically on first run. "
+            "No additional configuration needed."
         )
         return
 

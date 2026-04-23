@@ -10,39 +10,14 @@ except Exception:
     st = None
 
 
-def _read_setting(name, default=None):
-    value = os.getenv(name)
-    if value not in (None, ""):
-        return value
+# ─── USER PASSWORDS (Hardcoded for simplicity) ───────────────────────────────
+# These are used for Admin and Grievance Managers
 
-    if st is not None:
-        try:
-            secret_value = st.secrets.get(name)
-            if secret_value not in (None, ""):
-                return secret_value
-        except Exception:
-            pass
-
-    return default
-
-    
-
-ADMIN_SEED_PASSWORD = _read_setting("ADMIN_SEED_PASSWORD", "change-me-admin")
-GM001_PASSWORD = _read_setting("GM001_PASSWORD", "change-me-gm001")
-GM002_PASSWORD = _read_setting("GM002_PASSWORD", "change-me-gm002")
-GM003_PASSWORD = _read_setting("GM003_PASSWORD", "change-me-gm003")
-GM004_PASSWORD = _read_setting("GM004_PASSWORD", "change-me-gm004")
-
-# ─── MYSQL ────────────────────────────────────────────────────────────────────
-DB_CONFIG = {
-    "host":     _read_setting("MYSQL_HOST", "localhost"),
-    "port":     int(_read_setting("MYSQL_PORT", "3306")),
-    "user":     _read_setting("MYSQL_USER", "root"),
-    # Support either MYSQL_PASSWORD or DB_PASSWORD from local .env files / Streamlit secrets.
-    "password": _read_setting("MYSQL_PASSWORD") or _read_setting("DB_PASSWORD", ""),
-    "database": _read_setting("MYSQL_DB", "complaint_portal"),
-    "connection_timeout": int(_read_setting("MYSQL_CONNECTION_TIMEOUT", "10")),
-}
+ADMIN_SEED_PASSWORD = "Admin@2026#Secure"
+GM001_PASSWORD = "RajeshKumar@2026#Secure"
+GM002_PASSWORD = "PriyaSharma@2026#Secure"
+GM003_PASSWORD = "AnilVerma@2026#Secure"
+GM004_PASSWORD = "SunitaRao@2026#Secure"
 
 # ─── PREDEFINED USERS (Admin + 4 Grievance Managers) ─────────────────────────
 # Format: (user_id, full_name, email, password, role, department, category)
